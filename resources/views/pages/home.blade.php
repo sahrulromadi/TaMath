@@ -1,6 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
+    {{-- modal sukses Login --}}
+    @if (session('success'))
+        @include('components.modal.modal-success')
+    @endif
+
     <div
         class="flex justify-center items-center h-screen bg-gradient-to-r from-teal-300 via-lime-200 to-pink-200 text-gray-800">
         <div class="text-center">
