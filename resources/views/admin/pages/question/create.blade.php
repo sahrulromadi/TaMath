@@ -71,31 +71,37 @@
                 @enderror
             </div>
 
-            {{-- <div class="mb-4">
+            <div class="mb-4">
                 <label for="options" class="block text-sm font-medium text-gray-700">Pilihan Jawaban</label>
                 <div id="options">
-                    <div class="flex mb-2">
-                        <input type="text" name="options[]"
-                            class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm sm:text-sm"
-                            placeholder="Pilihan 1" required>
-                    </div>
-                    <div class="flex mb-2">
-                        <input type="text" name="options[]"
-                            class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm sm:text-sm"
-                            placeholder="Pilihan 2" required>
-                    </div>
-                    <div class="flex mb-2">
-                        <input type="text" name="options[]"
-                            class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm sm:text-sm"
-                            placeholder="Pilihan 3" required>
-                    </div>
-                    <div class="flex mb-2">
-                        <input type="text" name="options[]"
-                            class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm sm:text-sm"
-                            placeholder="Pilihan 4" required>
-                    </div>
+                    @foreach (old('options', []) as $index => $option)
+                        <div class="flex mb-2">
+                            <input type="text" name="options[]"
+                                class="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm sm:text-sm @error('options.' . $index) border-red-500 @enderror"
+                                value="{{ $option }}" placeholder="Pilihan {{ $index + 1 }}" required>
+                            <input type="checkbox" name="correct_option[]" value="{{ $index }}" class="ml-2" />
+                            Correct
+                        </div>
+                        @error('options.' . $index)
+                            <div class="text-sm text-red-500 mt-1">{{ $message }}</div>
+                        @enderror
+                    @endforeach
+
+                    <!-- For new options -->
+                    @for ($i = count(old('options', [])); $i < 4; $i++)
+                        <div class="flex mb-2">
+                            <input type="text" name="options[]"
+                                class="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm sm:text-sm @error('options.' . $i) border-red-500 @enderror"
+                                placeholder="Pilihan {{ $i + 1 }}" required>
+                            <input type="checkbox" name="correct_option[]" value="{{ $i }}" class="ml-2" />
+                            Correct
+                        </div>
+                        @error('options.' . $i)
+                            <div class="text-sm text-red-500 mt-1">{{ $message }}</div>
+                        @enderror
+                    @endfor
                 </div>
-            </div> --}}
+            </div>
 
             <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded-md">Simpan Pertanyaan</button>
         </form>

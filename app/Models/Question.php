@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use App\Models\Option;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Question extends Model
@@ -24,5 +26,11 @@ class Question extends Model
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
+    }
+
+    // 1 question punya banyak options
+    public function options(): HasMany
+    {
+        return $this->hasMany(Option::class);
     }
 }

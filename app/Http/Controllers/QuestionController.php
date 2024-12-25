@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Option;
 use App\Models\Category;
 use App\Models\Question;
 use Illuminate\Http\Request;
@@ -39,7 +40,12 @@ class QuestionController extends Controller
         $validated = $request->validate([
             'question_text' => 'required|string|max:255',
             'image' => 'nullable|file|mimes:png,jpg,jpeg|max:2048',
-            'category_id' => 'required|exists:categories,id'
+            'category_id' => 'required|exists:categories,id',
+
+            // options
+            'options' => 'required|array|min:2', // array 
+            'options.*' => 'required|string|max:255', // elemen dari array nya
+            'correct_option' => 'required|array|min:1|max:1'
         ]);
 
         // image
@@ -48,11 +54,21 @@ class QuestionController extends Controller
             $imagePath = $request->file('image')->store('question-image', 'public');
         }
 
-        Question::create([
+        // create question
+        $question = Question::create([
             'question_text' => $validated['question_text'],
             'category_id' => $validated['category_id'],
             'image' => $imagePath
         ]);
+
+        // create option
+        foreach ($validated['options'] as $key => $optionText) {
+            Option::create([
+                'question_id' => $question->id,
+                'option_text' => $optionText,
+                'is_correct' => in_array($key, $validated['correct_option']),
+            ]);
+        }
 
         return redirect()->back()->with('success', 'berhasil membuat question');
     }
