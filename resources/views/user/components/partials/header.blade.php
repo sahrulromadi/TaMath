@@ -9,6 +9,11 @@
             @auth
                 <!-- Tombol Logout -->
                 <button id="logoutButton" class="hover:text-gray-300">Logout</button>
+
+                {{-- menggunakan helper = auth()->user() --}}
+                @if (auth()->user()->role === 'admin')
+                    <a href="{{ route('admin') }}" class="hover:text-gray-300">Admin</a>
+                @endif
             @endauth
 
             @guest
