@@ -6,8 +6,21 @@
 
         <div class="mb-4">
             <label class="font-bold">Question:</label>
-            <p>{{ $question->question }}</p>
+            <p>{{ $question->question_text }}</p>
         </div>
+
+        <div class="mb-4">
+            <label class="font-bold">Image</label>
+            <div class="mt-2">
+                @if (isset($question->image) && Storage::disk('public')->exists($question->image))
+                    <img src="{{ Storage::url($question->image) }}" alt="Question Image"
+                        class="w-32 h-32 object-cover border border-gray-300 rounded-md shadow-md">
+                @else
+                    <p class="text-gray-500">No image available.</p>
+                @endif
+            </div>
+        </div>
+
 
         <div class="mb-4">
             <label class="font-bold">Category:</label>

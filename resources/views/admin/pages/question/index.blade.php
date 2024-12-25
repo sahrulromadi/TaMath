@@ -23,7 +23,7 @@
                     @foreach ($questions as $question)
                         <tr>
                             <td class="border px-4 py-2">{{ $question->id }}</td>
-                            <td class="border px-4 py-2">{{ $question->question }}</td>
+                            <td class="border px-4 py-2">{{ $question->question_text }}</td>
                             <td class="border px-4 py-2">{{ $question->category->name }}</td>
                             <td class="border px-4 py-2">
                                 <a href="{{ route('admin.question.show', $question->slug) }}"

@@ -13,11 +13,11 @@
 <body>
     {{-- session success dan error --}}
     @if (session('success'))
-        @include('user.components.modal.modal-success')
+        @include('user.components.modal.success')
     @endif
 
     @if (session('error'))
-        @include('user.components.modal.modal-error')
+        @include('user.components.modal.error')
     @endif
     {{-- end session modal  --}}
 

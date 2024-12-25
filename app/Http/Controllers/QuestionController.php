@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Question;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class QuestionController extends Controller
 {
@@ -15,7 +16,7 @@ class QuestionController extends Controller
     {
         $questions = Question::all();
 
-        return view('admin.pages.question.question-index', compact('questions'));
+        return view('admin.pages.question.index', compact('questions'));
     }
 
     /**
@@ -25,7 +26,7 @@ class QuestionController extends Controller
     {
         $categories = Category::all();
 
-        return view('admin.pages.question.question-create', compact('categories'));
+        return view('admin.pages.question.create', compact('categories'));
     }
 
     /**
@@ -33,14 +34,24 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
+        $imagePath = null;
+
         $validated = $request->validate([
-            'question' => 'required|string|min:3|max:255',
+            'question_text' => 'required|string|max:255',
+            'image' => 'nullable|file|mimes:png,jpg,jpeg|max:2048',
             'category_id' => 'required|exists:categories,id'
         ]);
 
+        // image
+        if ($request->hasFile('image')) {
+            // simpan ke storage dan ambil path nya
+            $imagePath = $request->file('image')->store('question-image', 'public');
+        }
+
         Question::create([
-            'question' => $validated['question'],
-            'category_id' => $validated['category_id']
+            'question_text' => $validated['question_text'],
+            'category_id' => $validated['category_id'],
+            'image' => $imagePath
         ]);
 
         return redirect()->back()->with('success', 'berhasil membuat question');
@@ -69,14 +80,27 @@ class QuestionController extends Controller
      */
     public function update(Request $request, Question $question)
     {
+        $imagePath = $question->image;
+
         $validated = $request->validate([
-            'question' => 'required|string|min:3|max:255',
+            'question_text' => 'required|string|max:255',
+            'image' => 'nullable|file|mimes:png,jpg,jpeg|max:2048',
             'category_id' => 'required|exists:categories,id'
         ]);
 
+        if ($request->hasFile('image')) {
+            if ($question->image && Storage::disk('public')->exists($question->image)) {
+                Storage::disk('public')->delete($question->image);
+            }
+
+            // simpan
+            $imagePath = $request->file('image')->store('question-image', 'public');
+        }
+
         $question->update([
-            'question' => $validated['question'],
-            'category_id' => $validated['category_id']
+            'question_text' => $validated['question_text'],
+            'category_id' => $validated['category_id'],
+            'image' => $imagePath
         ]);
 
         return redirect()->back()->with('success', 'berhasil update question');
@@ -87,6 +111,10 @@ class QuestionController extends Controller
      */
     public function destroy(Question $question)
     {
+        if ($question->image && Storage::disk('public')->exists($question->image)) {
+            Storage::disk('public')->delete($question->image);
+        }
+
         $question->delete();
 
         return redirect()->back()->with('success', 'berhasil delete');

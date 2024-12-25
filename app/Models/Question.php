@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Question extends Model
 {
     protected $fillable = [
-        'question',
+        'question_text',
         'category_id',
         'image',
         'slug'
