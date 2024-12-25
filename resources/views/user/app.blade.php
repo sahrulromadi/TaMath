@@ -13,21 +13,21 @@
 <body>
     {{-- session success dan error --}}
     @if (session('success'))
-        @include('components.modal.modal-success')
+        @include('user.components.modal.modal-success')
     @endif
 
     @if (session('error'))
-        @include('components.modal.modal-error')
+        @include('user.components.modal.modal-error')
     @endif
     {{-- end session modal  --}}
 
-    @include('layouts.header')
+    @include('user.components.partials.header')
 
     <main class="min-h-screen min-w-full">
         @yield('content')
     </main>
 
-    @include('layouts.footer')
+    @include('user.components.partials.footer')
 </body>
 
 </html>

@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('user.app')
 
 @section('content')
     <div class="flex justify-center items-center min-h-screen bg-gradient-to-r from-gray-100 via-gray-200 to-gray-300">

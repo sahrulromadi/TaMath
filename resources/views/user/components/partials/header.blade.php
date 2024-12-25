@@ -20,4 +20,4 @@
 </header>
 
 {{-- include modal logout --}}
-@include('components.modal.modal-logout')
+@include('user.components.modal.modal-logout')
