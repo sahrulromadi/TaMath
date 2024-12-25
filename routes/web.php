@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 
+// route custom untuk admin
+require base_path('routes/admin.php');
+
 Route::get('/', function () {
     return view('user.pages.home');
 })->name('home');
@@ -24,10 +27,4 @@ Route::middleware(['guest'])->group(function () {
 Route::middleware(['auth'])->group(function () {
     // logout
     Route::post('logout/', [AuthController::class, 'logout'])->name('logout');
-});
-
-Route::middleware(['auth', 'role:admin'])->group(function () {
-    Route::get('admin/', function () {
-        return view('admin.admin');
-    })->name('admin');
 });
