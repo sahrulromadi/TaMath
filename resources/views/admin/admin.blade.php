@@ -1,17 +1,33 @@
-@extends('user.app')
+<!DOCTYPE html>
+<html lang="en">
 
-@section('content')
-    <div
-        class="flex justify-center items-center h-screen bg-gradient-to-r from-teal-300 via-lime-200 to-pink-200 text-gray-800">
-        <div class="text-center">
-            <h1 class="text-4xl font-bold mb-6 text-gray-900">TaMath: Game Matematika</h1>
-            <p class="text-lg mb-6 text-gray-700">Latihan Matematika yang Menyenangkan! Selesaikan soal-soal untuk
-                meningkatkan kemampuan matematika Anda.</p>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>TaMath</title>
 
-            <a href="#"
-                class="px-6 py-3 bg-teal-400 text-xl rounded-lg hover:bg-teal-500 transition-colors duration-300">
-                Selesaikan Game
-            </a>
-        </div>
-    </div>
-@endsection
+    @vite('resources/css/app.css')
+</head>
+
+<body>
+    {{-- session success dan error --}}
+    @if (session('success'))
+        @include('user.components.modal.modal-success')
+    @endif
+
+    @if (session('error'))
+        @include('user.components.modal.modal-error')
+    @endif
+    {{-- end session modal  --}}
+
+    @include('user.components.partials.header')
+
+    <main class="min-h-screen min-w-full">
+        @yield('content')
+    </main>
+
+    @include('user.components.partials.footer')
+</body>
+
+</html>
