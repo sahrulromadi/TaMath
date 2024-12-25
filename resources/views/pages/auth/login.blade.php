@@ -5,11 +5,6 @@
         <div class="w-full max-w-md bg-white p-8 rounded-lg shadow-lg">
             <h2 class="text-3xl font-semibold text-center text-gray-800 mb-6">Login</h2>
 
-            {{-- modal sukses --}}
-            @if (session('error'))
-                @include('components.modal.modal-error')
-            @endif
-
             <form method="POST" action="{{ route('login.store') }}">
                 @csrf
 

@@ -11,6 +11,16 @@
 </head>
 
 <body>
+    {{-- session success dan error --}}
+    @if (session('success'))
+        @include('components.modal.modal-success')
+    @endif
+
+    @if (session('error'))
+        @include('components.modal.modal-error')
+    @endif
+    {{-- end session modal  --}}
+
     @include('layouts.header')
 
     <main class="min-h-screen min-w-full">
