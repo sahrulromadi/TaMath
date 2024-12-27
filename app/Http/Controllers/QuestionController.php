@@ -13,11 +13,12 @@ class QuestionController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index($categoryId)
     {
-        $questions = Question::all();
+        $category = Category::findOrFail($categoryId);
+        $questions = Question::where('category_id', $categoryId)->get();
 
-        return view('admin.pages.question.index', compact('questions'));
+        return view('admin.pages.question.index', compact('questions', 'category'));
     }
 
     /**
@@ -43,9 +44,9 @@ class QuestionController extends Controller
             'category_id' => 'required|exists:categories,id',
 
             // options
-            'options' => 'required|array|min:2', // array 
+            'options' => 'required|array|min:2|max:4', // array 
             'options.*' => 'required|string|max:255', // elemen dari array nya
-            'correct_option' => 'required|array|min:1|max:1'
+            'correct_option' => 'required|min:1|max:1'
         ]);
 
         // image
@@ -66,7 +67,7 @@ class QuestionController extends Controller
             Option::create([
                 'question_id' => $question->id,
                 'option_text' => $optionText,
-                'is_correct' => in_array($key, $validated['correct_option']),
+                'is_correct' => $key == $validated['correct_option'],
             ]);
         }
 
@@ -78,7 +79,7 @@ class QuestionController extends Controller
      */
     public function show(Question $question)
     {
-        return view('admin.pages.question.show', compact('question'));
+        //
     }
 
     /**
@@ -101,7 +102,12 @@ class QuestionController extends Controller
         $validated = $request->validate([
             'question_text' => 'required|string|max:255',
             'image' => 'nullable|file|mimes:png,jpg,jpeg|max:2048',
-            'category_id' => 'required|exists:categories,id'
+            'category_id' => 'required|exists:categories,id',
+
+            // options
+            'options' => 'required|array|min:2|max:4', // array 
+            'options.*' => 'required|string|max:255', // elemen dari array nya
+            'correct_option' => 'required|min:1|max:1'
         ]);
 
         if ($request->hasFile('image')) {
@@ -118,6 +124,18 @@ class QuestionController extends Controller
             'category_id' => $validated['category_id'],
             'image' => $imagePath
         ]);
+
+        // delete option agar bisa di create baru lagi
+        $question->options()->delete();
+
+        // update option
+        foreach ($validated['options'] as $key => $optionText) {
+            Option::create([
+                'question_id' => $question->id,
+                'option_text' => $optionText,
+                'is_correct' => $key == $validated['correct_option'],
+            ]);
+        }
 
         return redirect()->back()->with('success', 'berhasil update question');
     }

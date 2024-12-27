@@ -1,106 +1,218 @@
-@extends('admin.admin')
+@extends('admin.app')
 
 @section('content')
-    <div class="max-w-3xl mx-auto bg-white p-6 rounded-md shadow-lg">
-        <h2 class="text-2xl font-semibold text-center mb-4">Edit Question</h2>
-
-        <form action="{{ route('admin.question.update', $question->slug) }}" method="POST" enctype="multipart/form-data">
-            @csrf
-            @method('PUT')
-
-            <div class="mb-4">
-                <label for="question_text" class="block font-semibold">Question:</label>
-                <input type="text" id="question_text" name="question_text" class="w-full px-4 py-2 border rounded-lg"
-                    value="{{ old('question_text', $question->question_text) }}" required>
-                @error('question_text')
-                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                @enderror
+    <div class="container">
+        <div class="page-inner">
+            <div class="page-header">
+                <h3 class="fw-bold mb-3">Edit Question</h3>
+                <ul class="breadcrumbs mb-3">
+                    <li class="nav-home">
+                        <a href="{{ route('admin.dashboard') }}">
+                            <i class="icon-home"></i>
+                        </a>
+                    </li>
+                    <li class="separator">
+                        <i class="icon-arrow-right"></i>
+                    </li>
+                    <li class="nav-item">
+                        <span>Question</span>
+                    </li>
+                    <li class="separator">
+                        <i class="icon-arrow-right"></i>
+                    </li>
+                    <li class="nav-item">
+                        <span>Edit</span>
+                    </li>
+                </ul>
             </div>
 
-            <div class="mb-4">
-                <label class="font-bold">Image</label>
-                <div class="mt-2">
-                    @if (isset($question->image) && Storage::disk('public')->exists($question->image))
-                        <img src="{{ Storage::url($question->image) }}" alt="Question Image"
-                            class="w-32 h-32 object-cover border border-gray-300 rounded-md shadow-md">
-                    @else
-                        <p class="text-gray-500">No image available.</p>
-                    @endif
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Edit Question</div>
+                        </div>
+                        <form action="{{ route('admin.question.update', $question->slug) }}" method="post"
+                            enctype="multipart/form-data">
+                            @csrf
+                            @method('PUT')
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        {{-- category --}}
+                                        <div class="form-group form-group-default">
+                                            <label>Pilih Kelas</label>
+                                            <select class="form-select" name="category_id" required>
+                                                <option value="">Pilih Kelas</option>
+                                                @foreach ($categories as $category)
+                                                    <option value="{{ $category->id }}"
+                                                        {{ $question->category_id == $category->id ? 'selected' : '' }}>
+                                                        {{ $category->name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        {{-- category end --}}
+
+                                        {{-- options --}}
+                                        <div class="form-group">
+                                            <div class="d-flex justify-content-between mb-2">
+                                                <label for="options" class="form-label">Pilihan Jawaban</label>
+                                                <div id="add-option" class="text-primary" style="cursor: pointer">Tambah
+                                                    Opsi</div>
+                                            </div>
+                                            <div id="options">
+                                                {{-- Template Opsi --}}
+                                                @foreach ($question->options as $index => $option)
+                                                    <div class="input-group mb-2 option-row">
+                                                        <input type="text" class="form-control" name="options[]"
+                                                            placeholder="Masukkan pilihan jawaban"
+                                                            aria-label="Pilihan jawaban" value="{{ $option->option_text }}"
+                                                            required>
+                                                        <div class="input-group-text">
+                                                            <input type="radio" name="correct_option"
+                                                                value="{{ $index }}"
+                                                                {{ $option->is_correct ? 'checked' : '' }}
+                                                                aria-label="Tandai sebagai jawaban benar">
+                                                        </div>
+                                                        <button class="btn btn-danger btn-remove-option ms-4 rounded-3"
+                                                            type="button"><i class="fas fa-trash-alt"></i></button>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                        {{-- options end --}}
+                                    </div>
+                                    <div class="col-md-6">
+                                        {{-- image --}}
+                                        <div>
+                                            <img src="{{ asset('storage/' . $question->image) }}" alt="Preview Image"
+                                                class="img-fluid" style="max-height: 200px;">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="imageInput">Upload Image</label>
+                                            <input type="file" class="form-control-file" id="imageInput" name="image"
+                                                accept="image/*" />
+                                        </div>
+                                        <div class="form-group mt-3">
+                                            <img id="imagePreview" src="#" alt="Preview Image"
+                                                class="img-fluid d-none" style="max-height: 200px;" />
+                                        </div>
+                                        {{-- image end --}}
+
+                                        {{-- question_text --}}
+                                        <div class="form-group form-group-default">
+                                            <label>Question</label>
+                                            <textarea class="form-control" rows="5" name="question_text" placeholder="Type question here...">{{ old('question_text', $question->question_text) }}</textarea>
+                                        </div>
+                                        {{-- question_text end --}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-action d-flex flex-row justify-content-end gap-3">
+                                <button class="btn btn-success" type="submit">Update</button>
+                                <a href="" class="btn btn-danger">Cancel</a>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
-
-            <div class="mb-4">
-                <label for="image" class="block text-sm font-medium text-gray-700">Upload Gambar</label>
-                <input type="file" name="image" id="image" accept="image/*"
-                    class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                <!-- Error Message -->
-                @error('image')
-                    <span class="text-sm text-red-600">{{ $message }}</span>
-                @enderror
-                <!-- Preview -->
-                <div id="preview-container" class="mt-4 hidden">
-                    <p class="text-sm font-medium text-gray-700">Preview:</p>
-                    <img id="image-preview" src="#" alt="Preview Image"
-                        class="mt-2 w-32 h-32 object-cover border border-gray-300 rounded-md shadow-md">
-                </div>
-            </div>
-
-            <script>
-                // Script for previewing the image
-                document.getElementById('image').addEventListener('change', function(event) {
-                    const previewContainer = document.getElementById('preview-container');
-                    const previewImage = document.getElementById('image-preview');
-                    const file = event.target.files[0];
-
-                    if (file) {
-                        const reader = new FileReader();
-
-                        reader.onload = function(e) {
-                            previewImage.src = e.target.result;
-                            previewContainer.classList.remove('hidden');
-                        };
-
-                        reader.readAsDataURL(file);
-                    } else {
-                        previewContainer.classList.add('hidden');
-                    }
-                });
-            </script>
-
-            <div class="mb-4">
-                <label for="category_id" class="block font-semibold">Category:</label>
-                <select name="category_id" id="category_id" class="w-full px-4 py-2 border rounded-lg" required>
-                    <option value="">-- Select Category --</option>
-                    @foreach ($categories as $category)
-                        <option value="{{ $category->id }}" {{ $category->id == $question->category_id ? 'selected' : '' }}>
-                            {{ $category->name }}
-                        </option>
-                    @endforeach
-                </select>
-                @error('category_id')
-                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                @enderror
-            </div>
-
-            {{-- <div class="mb-4">
-                <label for="options" class="block font-semibold">Options:</label>
-                <div class="space-y-2">
-                    @foreach ($question->options as $index => $option)
-                        <input type="text" name="options[]" class="w-full px-4 py-2 border rounded-lg"
-                            value="{{ old('options.' . $index, $option->option) }}" required>
-                    @endforeach
-                </div>
-                @error('options')
-                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                @enderror
-            </div> --}}
-
-            <div class="flex justify-center space-x-4">
-                <button type="submit" class="px-6 py-2 bg-green-500 text-white rounded hover:bg-green-700">Update
-                    Question</button>
-                <a href="{{ route('admin.question.index') }}"
-                    class="px-6 py-2 bg-gray-500 text-white rounded hover:bg-gray-700">Cancel</a>
-            </div>
-        </form>
+        </div>
     </div>
+@endsection
+
+@section('custom-script')
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const optionsContainer = document.getElementById('options');
+            const addOptionButton = document.getElementById('add-option');
+            const imageInput = document.getElementById('imageInput');
+            const imagePreview = document.getElementById('imagePreview');
+
+            // Membatasi jumlah opsi hingga 4
+            const maxOptions = 4;
+
+            // Fungsi untuk memperbarui visibilitas tombol tambah opsi
+            const updateAddOptionButtonVisibility = () => {
+                const optionCount = optionsContainer.querySelectorAll('.option-row').length;
+                if (optionCount >= maxOptions) {
+                    addOptionButton.style.display = 'none'; // Sembunyikan tombol jika jumlah opsi >= 4
+                } else {
+                    addOptionButton.style.display = 'inline-block'; // Tampilkan tombol jika jumlah opsi < 4
+                }
+            };
+
+            // Periksa jumlah opsi saat halaman dimuat pertama kali
+            updateAddOptionButtonVisibility();
+
+            // Tambahkan event listener untuk tombol "Tambah Opsi"
+            addOptionButton.addEventListener('click', () => {
+                const optionCount = optionsContainer.querySelectorAll('.option-row').length;
+
+                // Hanya tambahkan opsi jika jumlahnya kurang dari 4
+                if (optionCount < maxOptions) {
+                    // Buat elemen baru untuk opsi
+                    const newOption = document.createElement('div');
+                    newOption.className = 'input-group mb-2 option-row';
+                    newOption.innerHTML = `
+                    <input 
+                        type="text" 
+                        class="form-control" 
+                        name="options[]" 
+                        placeholder="Masukkan pilihan jawaban" 
+                        aria-label="Pilihan jawaban" 
+                        required>
+                    <div class="input-group-text">
+                        <input 
+                            type="radio" 
+                            name="correct_option" 
+                            value="${optionCount}" 
+                            aria-label="Tandai sebagai jawaban benar">
+                    </div>
+                    <button class="btn btn-danger btn-remove-option ms-4 rounded-3" type="button"><i class="fas fa-trash-alt"></i></button>
+                `;
+
+                    // Tambahkan opsi baru ke dalam container
+                    optionsContainer.appendChild(newOption);
+
+                    // Tambahkan event listener untuk tombol hapus
+                    addRemoveEvent(newOption.querySelector('.btn-remove-option'));
+                }
+
+                // Update visibilitas tombol setelah opsi ditambahkan
+                updateAddOptionButtonVisibility();
+            });
+
+            // Fungsi untuk menambahkan event listener pada tombol hapus
+            const addRemoveEvent = (button) => {
+                button.addEventListener('click', () => {
+                    button.closest('.option-row').remove();
+                    // Update visibilitas tombol setelah opsi dihapus
+                    updateAddOptionButtonVisibility();
+                });
+            };
+
+            // Tambahkan event listener untuk semua tombol hapus yang sudah ada
+            document.querySelectorAll('.btn-remove-option').forEach(addRemoveEvent);
+
+            // Event listener untuk menampilkan preview gambar
+            imageInput.addEventListener('change', (event) => {
+                const file = event.target.files[0];
+
+                if (file) {
+                    const reader = new FileReader();
+
+                    reader.onload = function(e) {
+                        imagePreview.src = e.target.result;
+                        imagePreview.classList.remove('d-none'); // Tampilkan preview
+                    };
+
+                    reader.readAsDataURL(file);
+                } else {
+                    imagePreview.src = '#';
+                    imagePreview.classList.add('d-none'); // Sembunyikan preview jika tidak ada file
+                }
+            });
+        });
+    </script>
 @endsection

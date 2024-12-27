@@ -8,5 +8,8 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->grou
         return view('admin.dashboard');
     })->name('dashboard');
 
-    Route::resource('question', QuestionController::class);
+    Route::resource('question', QuestionController::class)->except(
+        ['index', 'show']
+    );
+    Route::get('question/category/{category_id}', [QuestionController::class, 'index'])->name('question.index');
 });
