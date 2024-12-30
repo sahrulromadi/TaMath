@@ -23,9 +23,9 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // dummy
-        Question::factory()
-            ->count(10)
-            ->has(Option::factory()->count(4))
-            ->create();
+        // Question::factory()
+        //     ->count(10)
+        //     ->has(Option::factory()->count(4))
+        //     ->create();
     }
 }
