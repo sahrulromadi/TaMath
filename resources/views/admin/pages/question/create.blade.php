@@ -32,7 +32,7 @@
                         <div class="card-header">
                             <div class="card-title">Create</div>
                         </div>
-                        <form action="{{ route('admin.question.store') }}" method="post" enctype="multipart/form-data">
+                        <form action="{{ route('admin.question.store') }}" method="post">
                             @csrf
                             <div class="card-body">
                                 <div class="row">
@@ -81,22 +81,7 @@
                                         {{-- options end --}}
 
                                     </div>
-                                    <div class="col-md-6">
-                                        {{-- image --}}
-                                        <div>
-                                            <img src="" alt="">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="imageInput">Upload Image</label>
-                                            <input type="file" class="form-control-file" id="imageInput" name="image"
-                                                accept="image/*" />
-                                        </div>
-                                        <div class="form-group mt-3">
-                                            <img id="imagePreview" src="#" alt="Preview Image"
-                                                class="img-fluid d-none" style="max-height: 200px;" />
-                                        </div>
-                                        {{-- image end --}}
-
+                                    <div class="col-md-6">                         
                                         {{-- question_text --}}
                                         <div class="form-group form-group-default">
                                             <label>Question</label>
@@ -189,24 +174,5 @@
 
             // Tambahkan event listener untuk semua tombol hapus yang sudah ada
             document.querySelectorAll('.btn-remove-option').forEach(addRemoveEvent);
-
-            // Event listener untuk menampilkan preview gambar
-            imageInput.addEventListener('change', (event) => {
-                const file = event.target.files[0];
-
-                if (file) {
-                    const reader = new FileReader();
-
-                    reader.onload = function(e) {
-                        imagePreview.src = e.target.result;
-                        imagePreview.classList.remove('d-none'); // Tampilkan preview
-                    };
-
-                    reader.readAsDataURL(file);
-                } else {
-                    imagePreview.src = '#';
-                    imagePreview.classList.add('d-none'); // Sembunyikan preview jika tidak ada file
-                }
-            });
         });
     </script>
