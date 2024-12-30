@@ -10,7 +10,8 @@
                                              hover:bg-opacity-30 
                                              transition 
                                              duration-300">
-            <img src="" alt="Profile" class="w-10 h-10 rounded-full object-cover">
+            <img src="{{ Auth::user()->picture ? Storage::url(Auth::user()->picture) : asset('assets/user/img/avatar.png') }}"
+                alt="Profile" class="w-10 h-10 rounded-full object-cover">
             <span></span>
             <i class="fas fa-chevron-down ml-2"></i>
         </button>
@@ -46,7 +47,7 @@
                     </a>
                 @endauth
 
-                <a href=""
+                <a href="{{ route('profile.edit', auth()->user()->id) }}"
                     class="px-4 py-3 
                           text-white 
                           hover:bg-white hover:bg-opacity-20 

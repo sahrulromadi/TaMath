@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\QuizController;
+use App\Http\Controllers\UserController;
 
 // route custom untuk admin
 require base_path('routes/admin.php');
@@ -28,6 +29,10 @@ Route::middleware(['guest'])->group(function () {
 Route::middleware(['auth'])->group(function () {
     // logout
     Route::post('logout', [AuthController::class, 'logout'])->name('logout');
+
+    // profile
+    Route::get('edit-profile/{user}', [UserController::class, 'edit'])->name('profile.edit');
+    Route::put('edit-profile/{user}', [UserController::class, 'update'])->name('profile.update');
 
     // quiz
     Route::get('pilih-level', [QuizController::class, 'pilihLevel'])->name('pilih-level');
