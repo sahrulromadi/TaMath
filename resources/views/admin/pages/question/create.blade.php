@@ -51,9 +51,17 @@
                                         </div>
                                         {{-- category end --}}
 
+                                        {{-- question_text --}}
+                                        <div class="form-group form-group-default">
+                                            <label>Question</label>
+                                            <textarea class="form-control" rows="5" name="question_text" placeholder="Type question here...">{{ old('question_text') }}</textarea>
+                                        </div>
+                                        {{-- question_text end --}}
+                                    </div>
+                                    <div class="col-md-6">
                                         {{-- options --}}
-                                        <div class="form-group">
-                                            <div class="d-flex justify-content-between mb-2">
+                                        <div class="form-group form-group-default">
+                                            <div class="d-flex justify-content-between mb-4">
                                                 <label for="options" class="form-label">Pilihan Jawaban</label>
                                                 <div id="add-option" class="text-primary" style="cursor: pointer">Tambah
                                                     Opsi</div>
@@ -79,15 +87,6 @@
                                             </div>
                                         </div>
                                         {{-- options end --}}
-
-                                    </div>
-                                    <div class="col-md-6">                         
-                                        {{-- question_text --}}
-                                        <div class="form-group form-group-default">
-                                            <label>Question</label>
-                                            <textarea class="form-control" rows="5" name="question_text" placeholder="Type question here...">{{ old('question_text') }}</textarea>
-                                        </div>
-                                        {{-- question_text end --}}
                                     </div>
                                 </div>
                             </div>

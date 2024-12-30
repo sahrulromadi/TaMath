@@ -31,8 +31,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 
     // profile
-    Route::get('edit-profile/{user}', [UserController::class, 'edit'])->name('profile.edit');
-    Route::put('edit-profile/{user}', [UserController::class, 'update'])->name('profile.update');
+    Route::get('edit-profile/{user}', [UserController::class, 'edit'])->middleware('can:view,user')->name('profile.edit');
+    Route::put('edit-profile/{user}', [UserController::class, 'update'])->middleware('can:view,user')->name('profile.update');
 
     // quiz
     Route::get('pilih-level', [QuizController::class, 'pilihLevel'])->name('pilih-level');
