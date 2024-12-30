@@ -46,7 +46,7 @@
                         <ul class="nav nav-collapse">
                             @foreach (App\Models\Category::all() as $category)
                                 <li>
-                                    <a href="{{ route('admin.question.index', $category->id) }}">
+                                    <a href="{{ route('admin.question.index', $category->name) }}">
                                         <span class="sub-item">{{ $category->name }}</span>
                                     </a>
                                 </li>
@@ -57,7 +57,7 @@
                 <li
                     class="nav-item {{ Route::is('admin.question.create') || Route::is('admin.question.edit') ? 'active' : '' }}">
                     <a data-bs-toggle="collapse" href="#question">
-                        <i class="fas fa-layer-group"></i>
+                        <i class="fas fa-question-circle"></i>
                         <p>Question</p>
                         <span class="caret"></span>
                     </a>
@@ -70,12 +70,6 @@
                             </li>
                         </ul>
                     </div>
-                </li>
-                <li class="nav-item">
-                    <a href="">
-                        <i class="fas fa-th-list"></i>
-                        <p>Manage Users</p>
-                    </a>
                 </li>
             </ul>
         </div>

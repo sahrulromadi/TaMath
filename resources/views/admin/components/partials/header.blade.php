@@ -53,7 +53,8 @@
                     <a class="dropdown-toggle profile-pic" data-bs-toggle="dropdown" href="#"
                         aria-expanded="false">
                         <div class="avatar-sm">
-                            <img src="" alt="..." class="avatar-img rounded-circle" />
+                            <img src="{{ Auth::user()->picture ? Storage::url(Auth::user()->picture) : asset('assets/user/img/avatar.png') }}"
+                                alt="Img Profile" class="avatar-img rounded-circle" />
                         </div>
                         <span class="profile-username">
                             <span class="op-7">Hi,</span>
@@ -65,7 +66,8 @@
                             <li>
                                 <div class="user-box">
                                     <div class="avatar-lg">
-                                        <img src="" alt="image profile" class="avatar-img rounded" />
+                                        <img src={{ Auth::user()->picture ? Storage::url(Auth::user()->picture) : asset('assets/user/img/avatar.png') }}
+                                            alt="image profile" class="avatar-img rounded" />
                                     </div>
                                     <div class="u-text">
                                         <h4>{{ auth()->user()->name }}</h4>
@@ -77,7 +79,8 @@
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="{{ route('home') }}">Home</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">My Profile</a>
+                                <a class="dropdown-item" href="{{ route('profile.edit', auth()->user()->id) }}">My
+                                    Profile</a>
                                 <form action="{{ route('logout') }}" method="post">
                                     @csrf
                                     <div class="dropdown-divider"></div>

@@ -60,19 +60,6 @@
                     <span>Edit Profil</span>
                 </a>
 
-                <a href=""
-                    class="px-4 py-3 
-                          text-white 
-                          hover:bg-white hover:bg-opacity-20 
-                          transition 
-                          duration-300 
-                          flex 
-                          items-center 
-                          space-x-3">
-                    <i class="fas fa-chart-bar"></i>
-                    <span>Statistik</span>
-                </a>
-
                 <div class="border-t border-white border-opacity-20 my-1"></div>
 
                 <button id="logoutButton"

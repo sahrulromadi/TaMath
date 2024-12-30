@@ -12,10 +12,9 @@ class QuestionController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index($categoryId) //nanti ganti dengan RMB
+    public function index(Category $category)
     {
-        $category = Category::findOrFail($categoryId);
-        $questions = Question::where('category_id', $categoryId)->get();
+        $questions = Question::where('category_id', $category->id)->get();
 
         return view('admin.pages.question.index', compact('questions', 'category'));
     }
