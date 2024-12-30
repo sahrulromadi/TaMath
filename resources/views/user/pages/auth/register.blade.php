@@ -2,67 +2,116 @@
 
 @section('content')
     <div
-        class="flex justify-center items-center h-screen bg-gradient-to-r from-pink-100 via-teal-100 to-lime-100 text-gray-700">
-        <div class="w-full max-w-md p-8 bg-white shadow-lg rounded-lg">
-            <h2 class="text-3xl font-semibold text-center text-gray-800 mb-6">Daftar Akun Baru</h2>
+        class="min-h-screen flex items-center justify-center 
+            bg-gradient-to-br from-[#6A5ACD] via-[#4169E1] to-[#1E90FF] 
+            overflow-hidden relative">
 
-            <!-- Form Register -->
-            <form method="POST" action="{{ route('register.store') }}">
+        {{-- Animasi Background --}}
+        @include('user.components.animasi.bubble')
+
+        {{-- Konten Utama --}}
+        <div
+            class="z-10 w-full max-w-md
+                bg-white bg-opacity-20 
+                backdrop-blur-lg 
+                rounded-3xl 
+                p-10 
+                shadow-2xl 
+                animate-fade-in 
+                relative 
+                overflow-hidden">
+
+            {{-- Judul --}}
+            <h2
+                class="text-4xl font-bold 
+                   text-transparent 
+                   bg-clip-text 
+                   bg-gradient-to-r 
+                   from-[#FFD700] 
+                   via-[#FF4500] 
+                   to-[#FF1493] 
+                   text-center 
+                   mb-8">
+                Daftar Akun Baru
+            </h2>
+
+            {{-- Form Register --}}
+            <form method="POST" action="{{ route('register.store') }}" class="space-y-6">
                 @csrf
 
-                <!-- Name -->
-                <div class="mb-4">
-                    <label for="name" class="block text-sm font-medium text-gray-700">Nama</label>
-                    <input type="text" id="name" name="name"
-                        class="w-full p-3 mt-1 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-400"
-                        value="{{ old('name') }}">
+                {{-- Input Nama --}}
+                <div class="input-group">
+                    <label for="name" class="input-label">Nama</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-user input-icon"></i>
+                        <input type="text" id="name" name="name" class="input-field" value="{{ old('name') }}"
+                            required autocomplete="name">
+                    </div>
                     @error('name')
-                        <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
+                        <p class="input-error">{{ $message }}</p>
                     @enderror
                 </div>
 
-                <!-- Email -->
-                <div class="mb-4">
-                    <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-                    <input type="email" id="email" name="email"
-                        class="w-full p-3 mt-1 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-400"
-                        value="{{ old('email') }}">
+                {{-- Input Email --}}
+                <div class="input-group">
+                    <label for="email" class="input-label">Email</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-envelope input-icon"></i>
+                        <input type="email" id="email" name="email" class="input-field" value="{{ old('email') }}"
+                            required autocomplete="email">
+                    </div>
                     @error('email')
-                        <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
+                        <p class="input-error">{{ $message }}</p>
                     @enderror
                 </div>
 
-                <!-- Password -->
-                <div class="mb-4">
-                    <label for="password" class="block text-sm font-medium text-gray-700">Kata Sandi</label>
-                    <input type="password" id="password" name="password"
-                        class="w-full p-3 mt-1 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-400">
+                {{-- Input Password --}}
+                <div class="input-group">
+                    <label for="password" class="input-label">Kata Sandi</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-lock input-icon"></i>
+                        <input type="password" id="password" name="password" class="input-field" required
+                            autocomplete="new-password">
+                    </div>
                     @error('password')
-                        <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
+                        <p class="input-error">{{ $message }}</p>
                     @enderror
                 </div>
 
-                <!-- Confirm Password -->
-                <div class="mb-6">
-                    <label for="password_confirmation" class="block text-sm font-medium text-gray-700">Konfirmasi Kata
-                        Sandi</label>
-                    <input type="password" id="password_confirmation" name="password_confirmation"
-                        class="w-full p-3 mt-1 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-400">
+                {{-- Input Konfirmasi Password --}}
+                <div class="input-group">
+                    <label for="password_confirmation" class="input-label">Konfirmasi Kata Sandi</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-lock input-icon"></i>
+                        <input type="password" id="password_confirmation" name="password_confirmation" class="input-field"
+                            required autocomplete="new-password">
+                    </div>
                 </div>
 
-                <!-- Submit Button -->
-                <div class="mb-4 text-center">
-                    <button type="submit"
-                        class="w-full py-3 bg-teal-400 text-white rounded-lg hover:bg-teal-500 transition-colors duration-300">
-                        Daftar
-                    </button>
-                </div>
+                {{-- Tombol Submit --}}
+                <button type="submit"
+                    class="w-full py-4 
+                           bg-gradient-to-r 
+                           from-[#2ECC71] 
+                           to-[#3498DB] 
+                           text-white 
+                           rounded-full 
+                           hover:scale-105 
+                           transform 
+                           transition 
+                           duration-300 
+                           shadow-lg 
+                           hover:shadow-2xl">
+                    Daftar
+                </button>
 
-                <!-- Login Redirect -->
-                <div class="text-center text-sm">
-                    <p>Sudah punya akun? <a href="{{ route('login.index') }}"
-                            class="text-teal-500 hover:text-teal-700">Masuk di
-                            sini</a></p>
+                {{-- Link Login --}}
+                <div class="text-center text-sm text-white">
+                    <p>Sudah punya akun?
+                        <a href="{{ route('login') }}" class="text-[#FFD700] hover:text-[#FF4500] transition duration-300">
+                            Masuk di sini
+                        </a>
+                    </p>
                 </div>
             </form>
         </div>

@@ -13,7 +13,7 @@ class QuestionController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index($categoryId)
+    public function index($categoryId) //nanti ganti dengan RMB
     {
         $category = Category::findOrFail($categoryId);
         $questions = Question::where('category_id', $categoryId)->get();
@@ -128,7 +128,7 @@ class QuestionController extends Controller
         // delete option agar bisa di create baru lagi
         $question->options()->delete();
 
-        // update option
+        // create option
         foreach ($validated['options'] as $key => $optionText) {
             Option::create([
                 'question_id' => $question->id,

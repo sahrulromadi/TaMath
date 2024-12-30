@@ -2,16 +2,61 @@
 
 @section('content')
     <div
-        class="flex justify-center items-center h-screen bg-gradient-to-r from-teal-300 via-lime-200 to-pink-200 text-gray-800">
-        <div class="text-center">
-            <h1 class="text-4xl font-bold mb-6 text-gray-900">TaMath: Game Matematika</h1>
-            <p class="text-lg mb-6 text-gray-700">Latihan Matematika yang Menyenangkan! Selesaikan soal-soal untuk
-                meningkatkan kemampuan matematika Anda.</p>
+        class="h-screen w-full flex flex-col justify-center items-center 
+            bg-gradient-to-br from-[#4A90E2] via-[#50C878] to-[#FF6B6B] 
+            overflow-hidden relative">
 
-            <a href="#"
-                class="px-6 py-3 bg-teal-400 text-xl rounded-lg hover:bg-teal-500 transition-colors duration-300">
-                Selesaikan Game
-            </a>
+        {{-- Animasi Bubble Background --}}
+        @include('user.components.animasi.bubble')
+
+        {{-- Konten Utama --}}
+        <div
+            class="z-10 text-center space-y-8 
+                bg-white bg-opacity-20 
+                backdrop-blur-lg 
+                rounded-3xl 
+                p-12 
+                shadow-2xl 
+                animate-fade-in">
+
+            {{-- Judul dengan Animasi --}}
+            <h1
+                class="text-6xl font-bold 
+                   text-transparent 
+                   bg-clip-text 
+                   bg-gradient-to-r 
+                   from-[#FFD700] 
+                   via-[#FF4500] 
+                   to-[#FF1493] 
+                   animate-pulse">
+                TaMath
+            </h1>
+
+            {{-- Subtitle --}}
+            <h4 class="text-2xl text-white font-medium tracking-wide">
+                Tamatkan matematika bersama TaMath!
+            </h4>
+
+            {{-- Tombol Start dengan Hover Effect --}}
+            <div class="mt-10">
+                <a href="{{ route('pilih-level') }}"
+                    class="px-10 py-4 
+                      bg-gradient-to-r 
+                      from-[#2ECC71] 
+                      to-[#3498DB] 
+                      text-white 
+                      font-bold 
+                      rounded-full 
+                      hover:scale-110 
+                      transform 
+                      transition 
+                      duration-300 
+                      shadow-lg 
+                      hover:shadow-2xl 
+                      inline-block">
+                    Mulai Petualangan
+                </a>
+            </div>
         </div>
     </div>
 @endsection

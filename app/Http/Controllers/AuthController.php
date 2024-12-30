@@ -25,7 +25,7 @@ class AuthController extends Controller
             'password' => Hash::make($validated['password'])
         ]);
 
-        return redirect()->route('login.index')->with('success', 'Selamat anda berhasil mendaftar');
+        return redirect()->route('login')->with('success', 'Selamat anda berhasil mendaftar');
     }
 
     // login
@@ -43,7 +43,7 @@ class AuthController extends Controller
             // regenerate session (di _token) untuk menghindari Session Fixation
             $request->session()->regenerate();
 
-            return redirect()->route('home')->with('success', 'Selamat anda berhasil masuk');
+            return redirect()->route('pilih-level')->with('success', 'Selamat anda berhasil masuk');
         }
 
         return redirect()->back()->with('error', 'Gagal Login')->withInput();
@@ -64,6 +64,6 @@ class AuthController extends Controller
         // regenerate token sesi untuk mencegah CSRF (di request_cookies)
         $request->session()->regenerateToken();
 
-        return redirect()->route('login.index');
+        return redirect()->route('login');
     }
 }

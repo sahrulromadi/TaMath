@@ -1,28 +1,115 @@
-<header class="bg-blue-600 text-white py-4 px-6">
-    <nav class="flex justify-between items-center">
-        <div class="text-lg font-semibold">
-            <a href="#" class="hover:text-gray-300">TaMath</a>
-        </div>
-        <div class="space-x-6">
-            <a href="{{ route('home') }}" class="hover:text-gray-300">Home</a>
+<header class="absolute top-0 right-0 p-6 z-50">
+    <div class="relative">
+        <button id="profileDropdown"
+            class="flex items-center space-x-2 
+                                             bg-white bg-opacity-20 
+                                             backdrop-blur-lg 
+                                             rounded-full 
+                                             px-4 py-2 
+                                             text-white 
+                                             hover:bg-opacity-30 
+                                             transition 
+                                             duration-300">
+            <img src="" alt="Profile" class="w-10 h-10 rounded-full object-cover">
+            <span></span>
+            <i class="fas fa-chevron-down ml-2"></i>
+        </button>
 
-            @auth
-                {{-- menggunakan helper = auth()->user() --}}
+        {{-- Dropdown Menu --}}
+        <div id="dropdownMenu"
+            class="absolute right-0 mt-2 w-56 
+                    bg-white bg-opacity-20 
+                    backdrop-blur-lg 
+                    rounded-2xl 
+                    shadow-2xl 
+                    overflow-hidden 
+                    transform 
+                    scale-0 
+                    origin-top-right 
+                    transition-all 
+                    duration-300 
+                    ease-in-out">
+            <div class="py-1">
+
                 @if (auth()->user()->role === 'admin')
-                    <a href="{{ route('admin.dashboard') }}" class="hover:text-gray-300">Admin</a>
-                @endif
+                    <a href="{{ route('admin.dashboard') }}"
+                        class="px-4 py-3 
+                      text-white 
+                      hover:bg-white hover:bg-opacity-20 
+                      transition 
+                      duration-300 
+                      flex 
+                      items-center 
+                      space-x-3">
+                        <i class="fa-solid fa-lock"></i>
+                        <span>Dashboard</span>
+                    </a>
+                @endauth
 
-                <!-- Tombol Logout -->
-                <button id="logoutButton" class="hover:text-gray-300">Logout</button>
-            @endauth
+                <a href=""
+                    class="px-4 py-3 
+                          text-white 
+                          hover:bg-white hover:bg-opacity-20 
+                          transition 
+                          duration-300 
+                          flex 
+                          items-center 
+                          space-x-3">
+                    <i class="fas fa-user"></i>
+                    <span>Edit Profil</span>
+                </a>
 
-            @guest
-                <a href="{{ route('login.index') }}" class="hover:text-gray-300">Login</a>
-                <a href="{{ route('register.index') }}" class="hover:text-gray-300">Register</a>
-            @endguest
+                <a href=""
+                    class="px-4 py-3 
+                          text-white 
+                          hover:bg-white hover:bg-opacity-20 
+                          transition 
+                          duration-300 
+                          flex 
+                          items-center 
+                          space-x-3">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>Statistik</span>
+                </a>
+
+                <div class="border-t border-white border-opacity-20 my-1"></div>
+
+                <button id="logoutButton"
+                    class="w-full text-left px-4 py-3 
+                                   text-white 
+                                   hover:bg-red-500 hover:bg-opacity-50 
+                                   transition 
+                                   duration-300 
+                                   flex 
+                                   items-center 
+                                   space-x-3">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Keluar</span>
+                </button>
+
         </div>
-    </nav>
+    </div>
+</div>
 </header>
 
-{{-- include modal logout --}}
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const profileDropdown = document.getElementById('profileDropdown');
+        const dropdownMenu = document.getElementById('dropdownMenu');
+
+        // Toggle Dropdown
+        profileDropdown.addEventListener('click', (e) => {
+            e.stopPropagation();
+            dropdownMenu.classList.toggle('scale-0');
+        });
+
+        // Tutup dropdown saat klik di luar
+        document.addEventListener('click', (e) => {
+            if (!profileDropdown.contains(e.target)) {
+                dropdownMenu.classList.add('scale-0');
+            }
+        });
+    });
+</script>
+
 @include('user.components.modal.logout')

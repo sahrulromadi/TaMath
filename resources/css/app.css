@@ -2,12 +2,322 @@
 @tailwind components;
 @tailwind utilities;
 
-.bg-primary {
-    @apply bg-blue-700;
+* {
+    font-family: "DynaPuff", serif;
 }
-.bg-secondary {
-    @apply bg-green-500;
+
+h1 {
+    @apply text-4xl md:text-5xl lg:text-6xl xl:text-7xl 
+           font-bold text-center tracking-tight;
 }
-.bg-accent {
-    @apply bg-orange-500;
+
+h2 {
+    @apply text-3xl md:text-4xl lg:text-5xl xl:text-6xl 
+           font-semibold text-center tracking-tight;
+}
+
+h3 {
+    @apply text-2xl md:text-3xl lg:text-4xl xl:text-5xl 
+           font-semibold text-center tracking-normal;
+}
+
+h4 {
+    @apply text-xl md:text-2xl lg:text-3xl xl:text-4xl 
+           font-medium text-center tracking-normal;
+}
+
+h5 {
+    @apply text-lg md:text-xl lg:text-2xl xl:text-3xl 
+           font-medium text-center;
+}
+
+h6 {
+    @apply text-base md:text-lg lg:text-xl xl:text-2xl 
+           font-normal text-center;
+}
+
+.bubble {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    animation: float 10s infinite;
+    opacity: 0.7;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0) scale(0.5);
+    }
+    50% {
+        transform: translateY(-100vh) scale(1.2);
+    }
+    100% {
+        transform: translateY(-200vh) scale(0.5);
+    }
+}
+
+/* Generate random bubble positions and delays */
+.bubble:nth-child(1) {
+    left: 10%;
+    animation-delay: 2s;
+    animation-duration: 15s;
+}
+.bubble:nth-child(2) {
+    left: 20%;
+    animation-delay: 4s;
+    animation-duration: 12s;
+}
+.bubble:nth-child(3) {
+    left: 30%;
+    animation-delay: 1s;
+    animation-duration: 18s;
+}
+.bubble:nth-child(4) {
+    left: 40%;
+    animation-delay: 6s;
+    animation-duration: 14s;
+}
+.bubble:nth-child(5) {
+    left: 50%;
+    animation-delay: 3s;
+    animation-duration: 16s;
+}
+.bubble:nth-child(6) {
+    left: 60%;
+    animation-delay: 5s;
+    animation-duration: 13s;
+}
+.bubble:nth-child(7) {
+    left: 70%;
+    animation-delay: 7s;
+    animation-duration: 17s;
+}
+.bubble:nth-child(8) {
+    left: 80%;
+    animation-delay: 2.5s;
+    animation-duration: 11s;
+}
+.bubble:nth-child(9) {
+    left: 90%;
+    animation-delay: 4.5s;
+    animation-duration: 19s;
+}
+.bubble:nth-child(10) {
+    left: 5%;
+    animation-delay: 1.5s;
+    animation-duration: 20s;
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.animate-fade-in {
+    animation: fade-in 1s ease-out;
+}
+
+/* Category Card Styles */
+.category-card {
+    position: relative;
+    background-color: transparent;
+    transition: all 0.3s ease;
+}
+
+.category-gradient {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #6a5acd, #4169e1, #1e90ff);
+    z-index: -1;
+    transition: transform 0.3s ease;
+}
+
+.category-card:hover .category-gradient {
+    transform: scale(1.1);
+}
+
+.category-card:nth-child(1) .category-gradient {
+    background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
+}
+
+.category-card:nth-child(2) .category-gradient {
+    background: linear-gradient(135deg, #45b7d1, #fdcb6e);
+}
+
+.category-card:nth-child(3) .category-gradient {
+    background: linear-gradient(135deg, #6a5acd, #ff6b6b);
+}
+
+/* Question Card Styles */
+.question-card {
+    position: relative;
+    background-color: transparent;
+    transition: all 0.3s ease;
+}
+
+.question-gradient {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #6a5acd, #4169e1, #1e90ff);
+    z-index: -1;
+    transition: transform 0.3s ease;
+}
+
+/* Variasi Gradient untuk Setiap Soal */
+.question-card:nth-child(1) .question-gradient {
+    background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
+}
+
+.question-card:nth-child(2) .question-gradient {
+    background: linear-gradient(135deg, #45b7d1, #fdcb6e);
+}
+
+.question-card:nth-child(3) .question-gradient {
+    background: linear-gradient(135deg, #6a5acd, #ff6b6b);
+}
+
+.question-card:nth-child(4) .question-gradient {
+    background: linear-gradient(135deg, #2ecc71, #3498db);
+}
+
+.question-card:nth-child(5) .question-gradient {
+    background: linear-gradient(135deg, #f39c12, #8e44ad);
+}
+
+/* Tambahkan gradient untuk soal selanjutnya */
+
+.question-card:hover .question-gradient {
+    transform: scale(1.1);
+}
+
+/* Option Item Styles */
+.option-item {
+    position: relative;
+    background-color: transparent;
+    transition: all 0.3s ease;
+}
+
+.option-gradient {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #6a5acd, #4169e1, #1e90ff);
+    z-index: -1;
+    transition: transform 0.3s ease;
+}
+
+/* Variasi Gradient untuk Setiap Opsi */
+.option-item:nth-child(1) .option-gradient {
+    background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
+}
+
+.option-item:nth-child(2) .option-gradient {
+    background: linear-gradient(135deg, #45b7d1, #fdcb6e);
+}
+
+.option-item:nth-child(3) .option-gradient {
+    background: linear-gradient(135deg, #6a5acd, #ff6b6b);
+}
+
+.option-item:nth-child(4) .option-gradient {
+    background: linear-gradient(135deg, #2ecc71, #3498db);
+}
+
+.option-item:hover .option-gradient {
+    transform: scale(1.1);
+}
+
+/* Input Styling */
+.input-group {
+    position: relative;
+}
+
+.input-label {
+    @apply block text-sm font-medium text-white mb-2;
+}
+
+.input-wrapper {
+    @apply relative;
+}
+
+.input-icon {
+    @apply absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500;
+}
+
+.input-field {
+    @apply w-full pl-12 pr-12 py-3 
+           border border-gray-300 
+           rounded-full 
+           bg-white bg-opacity-20 
+           text-white 
+           placeholder-gray-300 
+           focus:ring-2 focus:ring-[#2ECC71] 
+           transition duration-300;
+}
+
+.input-error {
+    @apply text-red-500 text-xs mt-2;
+}
+
+/* Checkbox Styling */
+.form-checkbox {
+    @apply rounded 
+           text-[#2ECC71] 
+           bg-white bg-opacity-20 
+           border-white border-opacity-50 
+           focus:ring-2 
+           focus:ring-[#2ECC71];
+}
+
+/* Responsive Adjustments */
+@media (max-width: 640px) {
+    .bubble {
+        width: 30px;
+        height: 30px;
+    }
+
+    .input-field {
+        @apply text-sm py-2 pl-10 pr-10;
+    }
+
+    .input-icon {
+        @apply left-3 text-sm;
+    }
+
+    .toggle-password {
+        right: 3px;
+    }
+}
+
+/* Additional Hover and Focus Effects */
+.input-field:focus {
+    @apply border-transparent 
+           ring-2 
+           ring-[#2ECC71] 
+           ring-opacity-50;
+}
+
+/* Button Hover Effect */
+button {
+    @apply transition duration-300 ease-in-out;
+}
+
+button:hover {
+    @apply transform scale-105 shadow-2xl;
 }
