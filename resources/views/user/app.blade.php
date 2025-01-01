@@ -7,6 +7,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>TaMath</title>
 
+    <link rel="shortcut icon" href="{{ asset('assets/user/img/favicon.ico') }}" type="image/x-icon">
+
     @vite('resources/css/app.css')
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
