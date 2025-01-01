@@ -32,7 +32,7 @@
                        from-[#FFD700] 
                        via-[#FF4500] 
                        to-[#FF1493]">
-                    Pilih Kelas Anda
+                    Pilih Kelas
                 </h1>
             </div>
 

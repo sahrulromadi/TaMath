@@ -38,5 +38,5 @@ Route::middleware(['auth'])->group(function () {
     Route::get('pilih-level', [QuizController::class, 'pilihLevel'])->name('pilih-level');
     Route::get('list-soal/{category}', [QuizController::class, 'listSoal'])->name('list-soal');
     Route::get('question/{question}', [QuizController::class, 'question'])->name('question');
-    Route::post('question/', [QuizController::class, 'submitAnswer'])->name('submit-answer');
+    Route::post('question', [QuizController::class, 'submitAnswer'])->name('submit-answer');
 });

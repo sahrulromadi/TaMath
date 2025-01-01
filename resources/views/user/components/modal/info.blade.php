@@ -1,8 +1,8 @@
-<div id="errorModal"
+<div id="infoModal"
     class="fixed inset-0 flex items-center justify-center 
-                             bg-black bg-opacity-50 z-[9999] 
-                             opacity-0 pointer-events-none 
-                             transition-all duration-300 ease-in-out">
+           bg-black bg-opacity-50 z-[9999] 
+           opacity-0 pointer-events-none 
+           transition-all duration-300 ease-in-out">
     <div
         class="bg-white 
                 bg-opacity-20 
@@ -28,18 +28,18 @@
         <div
             class="absolute inset-0 
                     bg-gradient-to-br 
-                    from-red-500 
-                    via-red-600 
-                    to-red-700 
+                    from-blue-500 
+                    via-blue-600 
+                    to-blue-700 
                     opacity-20 
                     -z-10">
         </div>
 
-        {{-- Ikon Error --}}
+        {{-- Ikon Info --}}
         <div class="mb-6 flex justify-center">
             <div
                 class="w-24 h-24 
-                        bg-red-500 
+                        bg-blue-500 
                         text-white 
                         rounded-full 
                         flex 
@@ -47,7 +47,7 @@
                         justify-center 
                         shadow-2xl 
                         animate-pulse">
-                <i class="fas fa-exclamation-triangle text-5xl"></i>
+                <i class="fas fa-info-circle text-5xl"></i>
             </div>
         </div>
 
@@ -59,32 +59,32 @@
                    text-transparent 
                    bg-clip-text 
                    bg-gradient-to-r 
-                   from-red-500 
-                   to-red-700">
-            Maaf!
+                   from-blue-500 
+                   to-blue-700">
+            Informasi
         </h3>
 
-        {{-- Pesan Error --}}
+        {{-- Pesan Info --}}
         <p
             class="text-white 
                   text-lg 
                   mb-6 
                   px-4 
                   opacity-80">
-            {{ session('error') }}
+            {{ session('info') }}
         </p>
 
         {{-- Tombol --}}
-        <button onclick="closeErrorModal()"
+        <button onclick="closeInfoModal()"
             class="px-10 
                        py-3 
                        bg-gradient-to-r 
-                       from-red-500 
-                       to-red-600 
+                       from-blue-500 
+                       to-blue-600 
                        text-white 
                        rounded-full 
-                       hover:from-red-600 
-                       hover:to-red-700 
+                       hover:from-blue-600 
+                       hover:to-blue-700 
                        transform 
                        hover:scale-105 
                        transition-all 
@@ -92,7 +92,7 @@
                        shadow-lg 
                        focus:outline-none 
                        focus:ring-2 
-                       focus:ring-red-500 
+                       focus:ring-blue-500 
                        focus:ring-opacity-50">
             Mengerti
         </button>
@@ -101,33 +101,33 @@
 
 <script>
     // Fungsi untuk menampilkan modal
-    function showErrorModal() {
-        const errorModal = document.getElementById('errorModal');
-        errorModal.classList.remove('opacity-0', 'pointer-events-none');
-        errorModal.classList.add('opacity-100', 'pointer-events-auto');
+    function showInfoModal() {
+        const infoModal = document.getElementById('infoModal');
+        infoModal.classList.remove('opacity-0', 'pointer-events-none');
+        infoModal.classList.add('opacity-100', 'pointer-events-auto');
 
         // Animasi scale
-        const modalContent = errorModal.querySelector('div');
+        const modalContent = infoModal.querySelector('div');
         modalContent.classList.remove('scale-90');
         modalContent.classList.add('scale-100');
     }
 
     // Fungsi untuk menutup modal
-    function closeErrorModal() {
-        const errorModal = document.getElementById('errorModal');
-        const modalContent = errorModal.querySelector('div');
+    function closeInfoModal() {
+        const infoModal = document.getElementById('infoModal');
+        const modalContent = infoModal.querySelector('div');
 
         // Animasi keluar
         modalContent.classList.add('scale-90');
-        errorModal.classList.remove('opacity-100', 'pointer-events-auto');
-        errorModal.classList.add('opacity-0', 'pointer-events-none');
+        infoModal.classList.remove('opacity-100', 'pointer-events-auto');
+        infoModal.classList.add('opacity-0', 'pointer-events-none');
     }
 
     // Jalankan saat halaman dimuat
     document.addEventListener('DOMContentLoaded', function() {
-        var errorMessage = "{{ session('error') }}";
-        if (errorMessage && errorMessage.trim() !== '') {
-            showErrorModal();
+        var infoMessage = "{{ session('info') }}";
+        if (infoMessage && infoMessage.trim() !== '') {
+            showInfoModal();
         }
     });
 </script>

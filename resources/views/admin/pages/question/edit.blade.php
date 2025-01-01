@@ -105,7 +105,7 @@
     </div>
 @endsection
 
-@section('custom-script')
+@push('custom-script')
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const optionsContainer = document.getElementById('options');
@@ -180,4 +180,4 @@
             document.querySelectorAll('.btn-remove-option').forEach(addRemoveEvent);
         });
     </script>
-@endsection
+@endpush

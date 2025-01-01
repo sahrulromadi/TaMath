@@ -26,6 +26,16 @@ class QuizController extends Controller
 
     public function question(Question $question)
     {
+        // cek apakah user sudah menyelesaikan atau belum
+        $isAnswer = Answer::where('user_id', Auth::id())
+            ->where('question_id', $question->id)
+            ->where('is_correct', true)
+            ->first();
+
+        if ($isAnswer) {
+            return redirect()->back()->with('info', 'Anda sudah menyelesaikan soal ini!');
+        }
+
         return view('user.pages.quiz.question', compact('question'));
     }
 
@@ -38,9 +48,11 @@ class QuizController extends Controller
 
         // ambil id option yg dipilih
         $option = Option::findOrFail($validated['selected_option']);
-
-        // ambilk is correct nya
+        // ambil is correct nya
         $isCorrect = $option->is_correct;
+
+        // ambil question nya buat route
+        $question = Question::findOrFail($validated['question_id']);
 
         // simpan jawaban
         Answer::create([
@@ -50,6 +62,10 @@ class QuizController extends Controller
             'is_correct' => $isCorrect
         ]);
 
-        return redirect()->back();
+        if ($isCorrect) {
+            return redirect()->route('list-soal', $question->category->name)->with('success', 'Jawaban anda benar!');
+        } else {
+            return redirect()->back()->with('error', 'Jawaban anda salah!');
+        }
     }
 }

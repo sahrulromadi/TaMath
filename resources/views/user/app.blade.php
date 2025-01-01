@@ -32,6 +32,10 @@
     @if (session('error'))
         @include('user.components.modal.error')
     @endif
+
+    @if (session('info'))
+        @include('user.components.modal.info')
+    @endif
     {{-- end session modal  --}}
 
     @auth

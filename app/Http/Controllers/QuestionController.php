@@ -59,7 +59,7 @@ class QuestionController extends Controller
             ]);
         }
 
-        return redirect()->back()->with('success', 'berhasil membuat question');
+        return redirect()->back()->with('success', 'Berhasil membuat question');
     }
 
     /**
@@ -112,7 +112,7 @@ class QuestionController extends Controller
             ]);
         }
 
-        return redirect()->back()->with('success', 'berhasil update question');
+        return redirect()->back()->with('success', 'Berhasil update question');
     }
 
     /**
@@ -120,8 +120,12 @@ class QuestionController extends Controller
      */
     public function destroy(Question $question)
     {
-        $question->delete();
+        try {
+            $question->delete();
 
-        return redirect()->back()->with('success', 'berhasil delete');
+            return redirect()->back()->with('success', 'Berhasil delete');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal delete');
+        }
     }
 }

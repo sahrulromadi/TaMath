@@ -65,16 +65,8 @@
 
     @include('admin.components.partials.script')
 
-    {{-- untuk show modal (ERROR) --}}
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var modalError = new bootstrap.Modal(document.getElementById('modal'));
-            modalError.show();
-        });
-    </script>
-
     {{-- untuk script agar jquery ke load --}}
-    @yield('custom-script')
+    @stack('custom-script')
 </body>
 
 </html>

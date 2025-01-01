@@ -101,10 +101,10 @@
     </div>
 @endsection
 
-@section('custom-script')
+@push('custom-script')
     <script>
         $(document).ready(function() {
             $("#basic-datatables").DataTable({});
         });
     </script>
-@endsection
+@endpush
